@@ -12,7 +12,7 @@ import (
 	"hateb/internal/hateb"
 )
 
-const dateLayout = "2006-01-02"
+const dateLayout = "20060102"
 const defaultTerminalWidth = 80
 
 type bookmarkFetcher interface {
@@ -24,7 +24,7 @@ func Run(args []string, stdout, stderr io.Writer, fetcher bookmarkFetcher) int {
 	fs.SetOutput(stderr)
 
 	user := fs.String("user", "", "Hatena user ID")
-	sinceValue := fs.String("since", "", "Since date (YYYY-MM-DD)")
+	fromValue := fs.String("from", "", "From date (yyyyMMdd)")
 
 	if err := fs.Parse(args); err != nil {
 		return 2
@@ -35,14 +35,14 @@ func Run(args []string, stdout, stderr io.Writer, fetcher bookmarkFetcher) int {
 		return 2
 	}
 
-	var since *time.Time
-	if *sinceValue != "" {
-		parsed, err := time.ParseInLocation(dateLayout, *sinceValue, time.Local)
+	var from *time.Time
+	if *fromValue != "" {
+		parsed, err := time.ParseInLocation(dateLayout, *fromValue, time.Local)
 		if err != nil {
-			fmt.Fprintln(stderr, "--since must be YYYY-MM-DD")
+			fmt.Fprintln(stderr, "--from must be yyyyMMdd")
 			return 2
 		}
-		since = &parsed
+		from = &parsed
 	}
 
 	bookmarks, err := fetcher.FetchBookmarks(context.Background(), *user)
@@ -51,8 +51,8 @@ func Run(args []string, stdout, stderr io.Writer, fetcher bookmarkFetcher) int {
 		return 1
 	}
 
-	if since != nil {
-		bookmarks = hateb.FilterBookmarksSince(bookmarks, *since)
+	if from != nil {
+		bookmarks = hateb.FilterBookmarksSince(bookmarks, *from)
 	}
 
 	width := terminalWidth(stdout)

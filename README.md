@@ -6,7 +6,7 @@
 
 ```sh
 go run . --user <はてなID>
-go run . --user <はてなID> --since <YYYY-MM-DD>
+go run . --user <はてなID> --from <yyyyMMdd>
 ```
 
 ビルドする場合:
@@ -14,10 +14,10 @@ go run . --user <はてなID> --since <YYYY-MM-DD>
 ```sh
 go build -o hateb
 ./hateb --user <はてなID>
-./hateb --user <はてなID> --since <YYYY-MM-DD>
+./hateb --user <はてなID> --from <yyyyMMdd>
 ```
 
-`--since` を指定した場合は、指定日以降のブックマークだけを出力します。
+`--from` を指定した場合は、指定日以降のブックマークだけを出力します。
 未指定の場合は、RSS で取得できる 1 ページ目の内容を出力します。
 
 出力形式は 1 件につき日付とタイトル、URL、空行です。

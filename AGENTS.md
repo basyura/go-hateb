@@ -17,7 +17,7 @@ feeds.
 ## Build, Test, and Development Commands
 
 - `go run . --user <hatena-id>`: run the CLI and print the first RSS page.
-- `go run . --user <hatena-id> --since YYYY-MM-DD`: run with date filtering.
+- `go run . --user <hatena-id> --from yyyyMMdd`: run with date filtering.
 - `go build -o hateb`: build the local executable.
 - `go test ./...`: run all package tests.
 - `gofmt -w <files>`: format edited Go files before committing.
